@@ -22,7 +22,6 @@ const theme = createMuiTheme({
 
 class App extends Component {
     render() {
-        console.log(theme)
         return(
             <Fragment >
                 <MuiThemeProvider theme={ theme }>
