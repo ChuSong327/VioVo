@@ -7,6 +7,8 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import Search from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import white from "@material-ui/core/colors";
 
 const styles = theme => ({
@@ -42,22 +44,24 @@ const styles = theme => ({
     },
     author: {
         fontSize: "2rem",
-        marginRight: theme.spacing.unit * 2
+        color: "inherit"
    },
    input: {
        fontSize: "1rem",
        color: "white",
-       letterSpacing:1
+       letterSpacing:1,
+       paddingLeft: 5
    }
 })
 
 class Navbar extends Component {
     render() {
         const { classes } = this.props;
-        
+
         return (
             <div className={ classes.root }>
-                <AppBar position="static" color="primary">
+                <AppBar position="static" color="primary" >
+                
                     <Toolbar>
                         <Typography variant="title" className={ classes.title }>
                             VioVo
@@ -69,7 +73,7 @@ class Navbar extends Component {
                                 className={ classes.textField }
                                 InputProps={{
                                     classes: {
-                                        input: classes.input
+                                        input: classes.input,
                                     }
                                 }}>
                             </TextField>
@@ -77,8 +81,8 @@ class Navbar extends Component {
                                 <Search className={ classes.search }/>
                             </IconButton>
                         </form>
-                        <IconButton color="inherit" >
-                            <AccountCircle className={ classes.author } />
+                        <IconButton className={ classes.author } >
+                            <AccountCircle style={{ fontSize: "2rem" }} />
                         </IconButton>
                     </Toolbar>  
                 </AppBar>

@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, { Component, Fragment } from 'react';
 import Navbar from "./components/navbar/Navbar";
 import Gallery from "./components/gallery/Gallery";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -24,7 +24,7 @@ class App extends Component {
     render() {
         return(
             <Fragment >
-                <MuiThemeProvider theme={theme}>
+                <MuiThemeProvider theme={ theme }>
                     <Navbar />
                     <Gallery />
                 </MuiThemeProvider>
