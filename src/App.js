@@ -12,9 +12,9 @@ const theme = createMuiTheme({
       contrastText: "#fafafa",
     },
     secondary: {
-      light: "#6ab7ff",
-      main: "#1e88e5",
-      dark: "#005cb2",
+      light: "#ffffff",
+      main: "#fbe9e7",
+      dark: "#c8b7b5",
       contrastText: "#fafafa",
     }
   }
@@ -22,6 +22,7 @@ const theme = createMuiTheme({
 
 class App extends Component {
     render() {
+        console.log(theme)
         return(
             <Fragment >
                 <MuiThemeProvider theme={ theme }>

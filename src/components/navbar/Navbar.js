@@ -51,17 +51,40 @@ const styles = theme => ({
        color: "white",
        letterSpacing:1,
        paddingLeft: 5
+   },
+   menuItem: {
+       "&:hover": {
+           backgroundColor: theme.palette.secondary.main
+       }
    }
 })
 
 class Navbar extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            anchorEl: null
+        }
+
+        this.handleClick = this.handleClick.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+    }
+
+    handleClick(event) {
+        this.setState({ anchorEl: event.currentTarget })
+    }
+
+    handleClose(event) {
+        this.setState({ anchorEl: null })
+    }
+
     render() {
         const { classes } = this.props;
+        const { anchorEl } = this.state;
 
         return (
             <div className={ classes.root }>
-                <AppBar position="static" color="primary" >
-                
+                <AppBar position="static" color="primary">
                     <Toolbar>
                         <Typography variant="title" className={ classes.title }>
                             VioVo
@@ -81,9 +104,25 @@ class Navbar extends Component {
                                 <Search className={ classes.search }/>
                             </IconButton>
                         </form>
-                        <IconButton className={ classes.author } >
+                        <IconButton 
+                            className={ classes.author } 
+                            aria-owns={ anchorEl ? "my-menu" : null }
+                            aria-haspopup="true"
+                            onClick={ this.handleClick }>
                             <AccountCircle style={{ fontSize: "2rem" }} />
                         </IconButton>
+                        <Menu 
+                            id="my-menu"
+                            anchorEl={ anchorEl }
+                            open={ Boolean(anchorEl) }
+                            onClose={ this.handleClose }>
+                            <MenuItem className={ classes.menuItem } onClick={ this.handleClose }>
+                                <a href="https://www.linkedin.com/in/chuchusong/" style={{ textDecoration: "none", color: "inherit" }} target="_blank">LinkedIn</a>
+                            </MenuItem>
+                            <MenuItem className={ classes.menuItem } onClick={ this.handleClose }>
+                                <a href="https://github.com/chusong327" style={{ textDecoration: "none", color: "inherit"}} target="_blank">Github</a> 
+                            </MenuItem>
+                        </Menu> 
                     </Toolbar>  
                 </AppBar>
             </div>
