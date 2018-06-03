@@ -25,51 +25,72 @@ const styles = theme => ({
     videoTitle: {
         paddingTop: theme.spacing.unit * 1,
         paddingLeft: theme.spacing.unit * 0.5, 
-        paddingBottom: 0
+        paddingBottom: 0,
+        height: theme.spacing.unit * 3,
     },
-    videoChannel: {
+    title: {
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap", 
+        overflow:"hidden",
+        fontWeight: 500,
+        fontSize: "1rem"
+    },
+    channelInfo: {
         marginTop: 0,
         paddingTop: theme.spacing.unit * 0.5,
         paddingLeft: theme.spacing.unit * 0.5,
+    },
+    channelTitle: {
+        fontWeight: 400,
+        color: "grey"
     }
 });
 
 class Gallery extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            video: [1,2,3,4,5,6,7,8,9,10]
-        }
+        this.state = {}
     }
 
     render() {
         const { classes } = this.props;
         const { video } = this.state;
+        const { videos } = this.props;
+       
 
-        return (
-            <div className={ classes.root }>
-                {video.map((video, index) => {
-                    return(
-                        <Card className={ classes.card } key={index}>
-                            <CardMedia 
-                                className={ classes.media }
-                                image= "https://images.crazygames.com/gustaaf-party.png" 
-                                // image="linkedin-box.png"
-                                title="hello"/>
-                            <CardContent className={ classes.videoTitle }>
-                                <Typography component="h3"> 
-                                    Hello
-                                </Typography>
-                            </CardContent>
-                            <CardContent className={ classes.videoChannel } >
-                                <Typography component="h4"> 
-                                    Chanel Info <br/>
-                                </Typography>
-                            </CardContent>
-                        </Card> )      
-                })}
-            </div>
-        )
+        if(!videos) {
+            return (
+                <div> "Loading"</div>
+            )
+        } else if(videos) {
+            return (
+                <div className={ classes.root }>
+                    {videos.map((video, index) => {
+                        const { url } = video.snippet.thumbnails.medium;
+                        const { title} = video.snippet;
+                        const { channelTitle } = video.snippet;
+                        
+                        return(
+                            <Card className={ classes.card } key={index}>
+                                <CardMedia 
+                                    className={ classes.media }
+                                    image={ url } 
+                                    title={ title } />
+                                <CardContent className={ classes.videoTitle }>
+                                    <Typography component="h3" className={ classes.title }> 
+                                        { title }
+                                    </Typography>
+                                </CardContent>
+                                <CardContent className={ classes.channelInfo } >
+                                    <Typography component="h4" className={ classes.channelTitle }> 
+                                        { channelTitle } <br/>
+                                    </Typography>
+                                </CardContent>
+                            </Card> )      
+                    })}
+                </div>
+            )
+        }
     }
 };
 
