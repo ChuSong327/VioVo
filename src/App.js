@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import Navbar from "./components/navbar/Navbar";
 import Gallery from "./components/gallery/Gallery";
+import Search from "./components/search/Search";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { YOUTUBE_API_KEY } from "./config/secret";
 import { fetchYoutube, getVideoInfo, getMostPopularVideos } from "./utils/ytUtil";
+
 
 const theme = createMuiTheme({
   palette: {
@@ -27,20 +29,14 @@ class App extends Component {
         super(props);
         this.state = {
             videos: "",
+            searhResult: "",
+            searchClick: null
         } 
+
+        this.handleSearchClick = this.handleSearchClick.bind(this);
     };
 
     componentWillMount(){
-        // fetchYoutube().then(res => {
-        //     let idArray = [];
-        //     res.items.forEach((video, index) => {
-        //         idArray.push(video.id.videoId);
-        //     })
-        //     this.setState({
-        //         videos: res.items,
-        //         videoId: idArray
-        //     });
-        // });
         getMostPopularVideos().then(res => {
             this.setState({
                 videos: res.items
@@ -48,13 +44,29 @@ class App extends Component {
         })
     };  
 
+    handleSearchClick(event){
+        // const keyword = event.target;
+        // console.log(event)
+        fetchYoutube("cat").then(res => {
+            console.log("GET HERE")
+            this.setState({
+                searchResult: res.items,
+                searchClick: true
+            })
+        })
+        
+    }
+
     render() {
         const { videos } = this.state;
+        const { searchResult } = this.state;
+        const { searchClick } = this.state;
+        // console.log(this.state.searhResult)
         return(
             <Fragment >
                 <MuiThemeProvider theme={ theme }>
-                    <Navbar />
-                    <Gallery videos={ videos }/>
+                    <Navbar searchClick={ this.handleSearchClick }/>
+                    {searchClick ? <Search searchResult={ searchResult }/> : <Gallery videos={ videos }/>}
                 </MuiThemeProvider>
             </Fragment>
         )

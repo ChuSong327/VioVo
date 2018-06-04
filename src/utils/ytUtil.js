@@ -6,7 +6,7 @@ export const fetchYoutube = keywords => {
     const params = {
         key: YOUTUBE_API_KEY,
         type: "video",
-        q: "",
+        q: keywords,
         part: "snippet",
         maxResults: 20
     };
