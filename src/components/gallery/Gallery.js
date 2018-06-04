@@ -5,6 +5,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import { getVideoInfo } from "../../utils/ytUtil";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import Moment from "react-moment";
 
 const styles = theme => ({
@@ -19,6 +20,9 @@ const styles = theme => ({
         height: 230,
         marginTop: theme.spacing.unit * 6,
         marginRight: theme.spacing.unit * 2
+    },
+    progress: {
+        marginTop: theme.spacing.unit * 0.5
     },
     media: {
         height: 0,
@@ -58,32 +62,33 @@ const styles = theme => ({
     }
 });
 
-// const convertNumbers = number => {
-//     let newNum;
-//     if(number < 1000) {
-//         return number;
-//     } 
-//     else if (number < 10000) {
-//         newNum = number.toString().substr(0, 1) + "," + number.toString().substring(1);
-//         return newNum;
-//     }
-//     else if (10000 <= number && number < 1000000) {
-//         newNum = Math.round(number / 1000) + "K";
-//         return newNum;
-//     }
-//     else if (number >= 1000000 && number < 10000000) {
-//         newNum = (number / 1000000).toString().substr(0, 3) + "M";
-//         return newNum;
-//     }
-//     else if (number >= 10000000 && number < 100000000) {
-//         newNum = Math.floor(number / 1000000) + "M";
-//         return newNum;
-//     }
-//     else if (number >= 100000000) {
-//         newNum = Math.floor(number / 100000000) + "B";
-//         return newNum;
-//     }
-// }
+//Slow Down the webpage loading significantly
+const convertNumbers = number => {
+    let newNum;
+    if(number < 1000) {
+        return number;
+    } 
+    else if (number < 10000) {
+        newNum = number.toString().substr(0, 1) + "," + number.toString().substring(1);
+        return newNum;
+    }
+    else if (10000 <= number && number < 1000000) {
+        newNum = Math.round(number / 1000) + "K";
+        return newNum;
+    }
+    else if (number >= 1000000 && number < 10000000) {
+        newNum = (number / 1000000).toString().substr(0, 3) + "M";
+        return newNum;
+    }
+    else if (number >= 10000000 && number < 100000000) {
+        newNum = Math.floor(number / 1000000) + "M";
+        return newNum;
+    }
+    else if (number >= 100000000) {
+        newNum = Math.floor(number / 100000000) + "B";
+        return newNum;
+    }
+}
 
 class Gallery extends Component {
     constructor(props) {
@@ -96,7 +101,9 @@ class Gallery extends Component {
         const { videos } = this.props;
         if(!videos) {
             return (
-                <div> "Loading"</div>
+                <LinearProgress className={ classes.progress } color="secondary"/>
+                
+                // <LinearProgress color="primary"/>
             )
         } else if(videos) {
             return (
@@ -105,7 +112,7 @@ class Gallery extends Component {
                         const { url } = video.snippet.thumbnails.medium;
                         const { title } = video.snippet;
                         const { channelTitle } = video.snippet;
-                        const { viewCount } = video.statistics;
+                        const  viewCount  = convertNumbers(video.statistics.viewCount);
                         const { publishedAt } = video.snippet;
 
                         return(
