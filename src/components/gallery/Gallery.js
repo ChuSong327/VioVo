@@ -45,8 +45,45 @@ const styles = theme => ({
     channelTitle: {
         fontWeight: 400,
         color: "grey"
+    },
+    dot: {
+        height: "3px",
+        width: "3px",
+        backgroundColor: "grey",
+        borderRadius: "50%",
+        display: "inline-block",
+        marginLeft: theme.spacing.unit * 0.3,
+        marginRight: theme.spacing.unit * 0.3,
+        marginBottom: theme.spacing.unit * 0.3
     }
 });
+
+// const convertNumbers = number => {
+//     let newNum;
+//     if(number < 1000) {
+//         return number;
+//     } 
+//     else if (number < 10000) {
+//         newNum = number.toString().substr(0, 1) + "," + number.toString().substring(1);
+//         return newNum;
+//     }
+//     else if (10000 <= number && number < 1000000) {
+//         newNum = Math.round(number / 1000) + "K";
+//         return newNum;
+//     }
+//     else if (number >= 1000000 && number < 10000000) {
+//         newNum = (number / 1000000).toString().substr(0, 3) + "M";
+//         return newNum;
+//     }
+//     else if (number >= 10000000 && number < 100000000) {
+//         newNum = Math.floor(number / 1000000) + "M";
+//         return newNum;
+//     }
+//     else if (number >= 100000000) {
+//         newNum = Math.floor(number / 100000000) + "B";
+//         return newNum;
+//     }
+// }
 
 class Gallery extends Component {
     constructor(props) {
@@ -85,7 +122,9 @@ class Gallery extends Component {
                                 <CardContent className={ classes.channelInfo } >
                                     <Typography component="h4" className={ classes.channelTitle }> 
                                         { channelTitle } <br/>
-                                        { viewCount } views ~ <Moment fromNow>{ publishedAt }</Moment>
+                                        { viewCount } views 
+                                        <span classes="dot" className={ classes.dot }></span> 
+                                        <Moment fromNow>{ publishedAt }</Moment>
                                     </Typography>
                                 </CardContent>
                             </Card> 
