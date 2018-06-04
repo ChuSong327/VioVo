@@ -4,6 +4,7 @@ import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import Moment from "react-moment";
 
 const styles = theme => ({
     root: {
@@ -13,7 +14,7 @@ const styles = theme => ({
         marginTop: theme.spacing.unit *  5
     },
     card: {
-        height: theme.spacing.unit * 15,
+        height: "8vw",
         marginTop: theme.spacing.unit * 3,
         marginLeft: "20%",
         marginRight: "20%",
@@ -23,9 +24,10 @@ const styles = theme => ({
         alignItems: "flex-start"
     },
     media: {
-        height: theme.spacing.unit * 15,
-        width: "20%",
-        paddingTop: 0
+        height: "8vw",
+        width: "30%",
+        padding:0,
+        marginRight: theme.spacing.unit * 2
     },
     cardContent: {
         paddingTop: 3,
@@ -34,13 +36,23 @@ const styles = theme => ({
     },
     videoTitle: {
         fontWeight: 500,
-        fontSize: "1.1rem"
+        fontSize: "1.2vw"
     },
     videoInfo:{
         fontWegith: 300,
-        fontSize: "0.8rem",
+        fontSize: "0.8vw",
         color: "grey",
-        paddingTop: theme.spacing.unit * 0
+        paddingTop: theme.spacing.unit * 0,
+    },
+    dot: {
+        height: "3px",
+        width: "3px",
+        backgroundColor: "grey",
+        borderRadius: "50%",
+        display: "inline-block",
+        marginLeft: theme.spacing.unit * 0.5,
+        marginRight: theme.spacing.unit * 0.5,
+        marginBottom: theme.spacing.unit * 0.3
     }
 })
 
@@ -53,8 +65,7 @@ class Search extends Component {
     render(){
         const { classes } = this.props;
         const { searchResult } = this.props;
-        console.log("in search", this.props)
-
+        
         return(
             <div className={ classes.root }>
                 {searchResult.map((video, index) => {
@@ -63,7 +74,6 @@ class Search extends Component {
                     const { channelTitle } = video.snippet;
                     const { description } = video.snippet;
                     const { publishedAt } = video.snippet;
-                    console.log(video.snippet.thumbnails)
                     return(
                         <Card className={ classes.card } key={ index }>
                             <CardMedia 
@@ -75,8 +85,10 @@ class Search extends Component {
                                     <Typography className={ classes.videoTitle } component="h1">
                                         { title }
                                     </Typography>
-                                    <Typography className={ classes.videoInfo } component="h1">
-                                        {channelTitle}
+                                    <Typography className={ classes.videoInfo } component="h1" style={{ marginBottom: 2}}>
+                                        {channelTitle} 
+                                        <span classes="dot" className={ classes.dot }></span> 
+                                        <Moment fromNow>{ publishedAt }</Moment>
                                     </Typography>
                                 </CardContent>
                                 <CardContent className={ classes.cardContent }>
@@ -85,7 +97,6 @@ class Search extends Component {
                                     </Typography>
                                 </CardContent>
                             </div>
-                            
                         </Card>
                     )
                 })}
