@@ -82,6 +82,8 @@ class Navbar extends Component {
         const { classes } = this.props;
         const { anchorEl } = this.state;
         const { searchClick } = this.props;
+        const { searchInput } = this.props;
+
         return (
             <div className={ classes.root }>
                 <AppBar position="static" color="primary">
@@ -92,6 +94,7 @@ class Navbar extends Component {
                         <form className={ classes.form }>
                             <TextField 
                                 id="search-input" 
+                                onChange={ searchInput }
                                 placeholder="Search"
                                 className={ classes.textField }
                                 InputProps={{
@@ -101,7 +104,7 @@ class Navbar extends Component {
                                 }}>
                             </TextField>
                             <IconButton>
-                                <Search className={ classes.search } onClick={ searchClick }/>
+                                <Search id="search-input" className={ classes.search } onClick={ searchClick }/>
                             </IconButton>
                         </form>
                         <IconButton 

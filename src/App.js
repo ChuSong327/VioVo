@@ -30,10 +30,12 @@ class App extends Component {
         this.state = {
             videos: "",
             searhResult: "",
-            searchClick: null
+            searchClick: null,
+            searchInput:""
         } 
 
         this.handleSearchClick = this.handleSearchClick.bind(this);
+        this.handleSearchInput = this.handleSearchInput.bind(this);
     };
 
     componentWillMount(){
@@ -45,27 +47,31 @@ class App extends Component {
     };  
 
     handleSearchClick(event){
-        // const keyword = event.target;
-        // console.log(event)
-        fetchYoutube("cat").then(res => {
-            console.log("GET HERE")
+        const keyword = this.state.searchInput;
+        fetchYoutube(keyword).then(res => {
             this.setState({
                 searchResult: res.items,
                 searchClick: true
             })
         })
-        
+    }
+
+    handleSearchInput(event){
+        this.setState({
+            searchInput: event.target.value
+        })
     }
 
     render() {
         const { videos } = this.state;
         const { searchResult } = this.state;
         const { searchClick } = this.state;
-        // console.log(this.state.searhResult)
+        const { searchInput } = this.state;
+
         return(
             <Fragment >
                 <MuiThemeProvider theme={ theme }>
-                    <Navbar searchClick={ this.handleSearchClick }/>
+                    <Navbar searchClick={ this.handleSearchClick } searchInput={ this.handleSearchInput }/>
                     {searchClick ? <Search searchResult={ searchResult }/> : <Gallery videos={ videos }/>}
                 </MuiThemeProvider>
             </Fragment>
