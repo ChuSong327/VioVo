@@ -12,10 +12,25 @@ export const fetchYoutube = keywords => {
     };
     
     return axios.get(url, { params })
-        .then(res => { 
-            return res.data;
-        });
+            .then(res => { 
+                return res.data;
+            });
 };
 
- 
+export const getMostPopularVideos = videoId => {
+    const url = "https://www.googleapis.com/youtube/v3/videos";
+    const params = {
+        key: YOUTUBE_API_KEY,
+        chart: "mostPopular",
+        regionCode: "US",
+        part: "snippet,contentDetails,statistics",
+        maxResults: 20,
+        videoCategoryId: "",
+    };
+
+    return axios.get(url, { params })
+            .then(res => {
+                return res.data;
+            })
+}
 

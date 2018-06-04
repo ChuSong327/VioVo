@@ -3,7 +3,7 @@ import Navbar from "./components/navbar/Navbar";
 import Gallery from "./components/gallery/Gallery";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { YOUTUBE_API_KEY } from "./config/secret";
-import { fetchYoutube } from "./utils/ytUtil";
+import { fetchYoutube, getVideoInfo, getMostPopularVideos } from "./utils/ytUtil";
 
 const theme = createMuiTheme({
   palette: {
@@ -26,21 +26,30 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            videos: ""
-        }   
-    }
+            videos: "",
+        } 
+    };
 
     componentWillMount(){
-        fetchYoutube().then( res => {
+        // fetchYoutube().then(res => {
+        //     let idArray = [];
+        //     res.items.forEach((video, index) => {
+        //         idArray.push(video.id.videoId);
+        //     })
+        //     this.setState({
+        //         videos: res.items,
+        //         videoId: idArray
+        //     });
+        // });
+        getMostPopularVideos().then(res => {
             this.setState({
                 videos: res.items
-            });
-        });
-    }
+            })
+        })
+    };  
 
     render() {
         const { videos } = this.state;
-
         return(
             <Fragment >
                 <MuiThemeProvider theme={ theme }>
@@ -50,6 +59,6 @@ class App extends Component {
             </Fragment>
         )
     }
-}
+};
 
 export default App;

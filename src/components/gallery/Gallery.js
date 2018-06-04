@@ -4,6 +4,8 @@ import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
+import { getVideoInfo } from "../../utils/ytUtil";
+import Moment from "react-moment";
 
 const styles = theme => ({
     root: {
@@ -50,14 +52,11 @@ class Gallery extends Component {
     constructor(props) {
         super(props);
         this.state = {}
-    }
+    };
 
     render() {
         const { classes } = this.props;
-        const { video } = this.state;
         const { videos } = this.props;
-       
-
         if(!videos) {
             return (
                 <div> "Loading"</div>
@@ -67,9 +66,11 @@ class Gallery extends Component {
                 <div className={ classes.root }>
                     {videos.map((video, index) => {
                         const { url } = video.snippet.thumbnails.medium;
-                        const { title} = video.snippet;
+                        const { title } = video.snippet;
                         const { channelTitle } = video.snippet;
-                        
+                        const { viewCount } = video.statistics;
+                        const { publishedAt } = video.snippet;
+
                         return(
                             <Card className={ classes.card } key={index}>
                                 <CardMedia 
@@ -84,14 +85,16 @@ class Gallery extends Component {
                                 <CardContent className={ classes.channelInfo } >
                                     <Typography component="h4" className={ classes.channelTitle }> 
                                         { channelTitle } <br/>
+                                        { viewCount } views ~ <Moment fromNow>{ publishedAt }</Moment>
                                     </Typography>
                                 </CardContent>
-                            </Card> )      
+                            </Card> 
+                        )      
                     })}
                 </div>
             )
         }
-    }
+    };
 };
 
 export default withStyles(styles)(Gallery);
