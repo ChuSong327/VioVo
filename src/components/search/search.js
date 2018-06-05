@@ -14,7 +14,7 @@ const styles = theme => ({
         marginTop: theme.spacing.unit *  5
     },
     card: {
-        height: "8vw",
+        height: "10vw",
         marginTop: theme.spacing.unit * 3,
         marginLeft: "20%",
         marginRight: "20%",
@@ -24,8 +24,8 @@ const styles = theme => ({
         alignItems: "flex-start"
     },
     media: {
-        height: "8vw",
-        width: "30%",
+        height: "10vw",
+        width: "50%",
         padding:0,
         marginRight: theme.spacing.unit * 2
     },
@@ -40,7 +40,7 @@ const styles = theme => ({
     },
     videoInfo:{
         fontWegith: 300,
-        fontSize: "0.8vw",
+        fontSize: "0.9vw",
         color: "grey",
         paddingTop: theme.spacing.unit * 0,
     },
@@ -65,7 +65,7 @@ class Search extends Component {
     render(){
         const { classes } = this.props;
         const { searchResult } = this.props;
-        
+        const { videoClick } = this.props;
         return(
             <div className={ classes.root }>
                 {searchResult.map((video, index) => {
@@ -74,15 +74,19 @@ class Search extends Component {
                     const { channelTitle } = video.snippet;
                     const { description } = video.snippet;
                     const { publishedAt } = video.snippet;
+                    const { videoId } = video.id;
                     return(
-                        <Card className={ classes.card } key={ index }>
+                        <Card className={ classes.card } key={ index } onClick={ videoClick } id={ videoId }>
                             <CardMedia 
                                 className={ classes.media }
                                 image={ url }
-                                title={ title }/>
+                                title={ title }
+                                />
                             <div>
                                 <CardContent className={ classes.cardContent }>
-                                    <Typography className={ classes.videoTitle } component="h1">
+                                    <Typography 
+                                        className={ classes.videoTitle } 
+                                        component="h1">
                                         { title }
                                     </Typography>
                                     <Typography className={ classes.videoInfo } component="h1" style={{ marginBottom: 2}}>

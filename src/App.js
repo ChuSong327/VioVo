@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from 'react';
-import Navbar from "./components/navbar/Navbar";
-import Gallery from "./components/gallery/Gallery";
-import Search from "./components/search/Search";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { YOUTUBE_API_KEY } from "./config/secret";
-import { fetchYoutube, getVideoInfo, getMostPopularVideos } from "./utils/ytUtil";
-
+import { fetchYoutube, getMostPopularVideos } from "./utils/ytUtil";
+import Navbar from "./components/navbar/Navbar";
+import Gallery from "./components/gallery/Gallery";
+import Search from "./components/search/search";
+import VideoPlayer from "./components/videoplayer/VideoPlayer";
 
 const theme = createMuiTheme({
   palette: {
@@ -31,11 +31,13 @@ class App extends Component {
             videos: "",
             searhResult: "",
             searchClick: null,
-            searchInput:""
+            searchInput:"",
+            videoClick: null,
+            videoId: ""
         } 
-
         this.handleSearchClick = this.handleSearchClick.bind(this);
         this.handleSearchInput = this.handleSearchInput.bind(this);
+        this.handleVideoClick = this.handleVideoClick.bind(this);
     };
 
     componentWillMount(){
@@ -46,33 +48,46 @@ class App extends Component {
         })
     };  
 
+    handleSearchInput(event){
+        this.setState({
+            searchInput: event.target.value
+        })
+    };
+
     handleSearchClick(event){
         const keyword = this.state.searchInput;
         fetchYoutube(keyword).then(res => {
             this.setState({
                 searchResult: res.items,
-                searchClick: true
+                searchClick: true,
+                videoClick: false
             })
         })
-    }
+    };
 
-    handleSearchInput(event){
+    handleVideoClick(event){
+        const videoId = event.currentTarget.id
         this.setState({
-            searchInput: event.target.value
+            videoClick: true,
+            searchClick: false,
+            videoId: videoId
         })
-    }
+    };
 
     render() {
         const { videos } = this.state;
         const { searchResult } = this.state;
         const { searchClick } = this.state;
         const { searchInput } = this.state;
-
+        const { videoClick } = this.state;
+        const { videoId } = this.state;
         return(
             <Fragment >
                 <MuiThemeProvider theme={ theme }>
                     <Navbar searchClick={ this.handleSearchClick } searchInput={ this.handleSearchInput }/>
-                    {searchClick ? <Search searchResult={ searchResult }/> : <Gallery videos={ videos }/>}
+                    { searchClick ? <Search searchResult={ searchResult } videoClick={ this.handleVideoClick }/> 
+                                  : (videoClick ? <VideoPlayer videoId={ videoId }/> 
+                                                 : <Gallery videos={ videos } videoClick = { this.handleVideoClick } />)}
                 </MuiThemeProvider>
             </Fragment>
         )
