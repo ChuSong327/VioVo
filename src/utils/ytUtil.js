@@ -34,3 +34,17 @@ export const getMostPopularVideos = videoId => {
             })
 }
 
+export const getVideoInfo = videoId => {
+    const url = "https://www.googleapis.com/youtube/v3/videos";
+    const params = {
+        key: YOUTUBE_API_KEY,
+        part:"snippet,contentDetails,statistics",
+        videoCategoryId: "",
+        id: videoId
+    };
+
+    return axios.get(url, { params })
+            .then(res => {
+                return res.data;
+            });
+};
