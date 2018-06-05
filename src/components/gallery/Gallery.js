@@ -1,10 +1,10 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
+import { getVideoInfo } from "../../utils/ytUtil";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import { getVideoInfo } from "../../utils/ytUtil";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Moment from "react-moment";
 
@@ -99,11 +99,11 @@ class Gallery extends Component {
     render() {
         const { classes } = this.props;
         const { videos } = this.props;
+        const { videoClick } = this.props;
+
         if(!videos) {
             return (
                 <LinearProgress className={ classes.progress } color="secondary"/>
-                
-                // <LinearProgress color="primary"/>
             )
         } else if(videos) {
             return (
@@ -114,15 +114,19 @@ class Gallery extends Component {
                         const { channelTitle } = video.snippet;
                         const  viewCount  = convertNumbers(video.statistics.viewCount);
                         const { publishedAt } = video.snippet;
-
+                        const { id } = video;
                         return(
-                            <Card className={ classes.card } key={index}>
+                            <Card 
+                                className={ classes.card } 
+                                key={ index } 
+                                onClick={ videoClick } 
+                                id={ id }>
                                 <CardMedia 
                                     className={ classes.media }
                                     image={ url } 
-                                    title={ title } />
+                                    title={ title }/>
                                 <CardContent className={ classes.videoTitle }>
-                                    <Typography component="h3" className={ classes.title }> 
+                                    <Typography component="h3" className={ classes.title } id={ id }> 
                                         { title }
                                     </Typography>
                                 </CardContent>
