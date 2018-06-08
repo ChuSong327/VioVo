@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import VideoList from "../videolist/VideoList";
 import Comment from "../comment/Comment";
 import { getVideoInfo } from "../../utils/ytUtil";
+import { convertNumbers } from "../../utils/numConverter";
+import { formatNumbers } from "../../utils/numConverter";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent";
@@ -50,23 +52,24 @@ const styles = theme => ({
     },
     statBar: {
         marginRight: theme.spacing.unit * 3,
+        marginTop: theme.spacing.unit * 1.5,
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "flex-end",
+        alignItems: "center",
     },
     iconStyle:{
         fontSize: "1.5vw",
         color:"#9E9E9E",
         display: "inline-block",
-        marginRight: theme.spacing.unit * 1.5,
+        marginRight: theme.spacing.unit * 1.2,
         "&:hover": {
             color: "#757575"
         }
     },
     likeStyle: {
         color: "#9E9E9E",
-        fontSize: "1.1vw"
+        fontSize: "1vw"
     }
 });
 
@@ -120,20 +123,20 @@ class VideoPlayer extends Component {
                              <div className={ classes.videoInfo }>
                                 <CardContent>
                                     <Typography className={ classes.viewStyle }>
-                                        { viewCount } views
+                                        { formatNumbers(viewCount) } views
                                     </Typography>
                                  </CardContent>
                                 <CardContent className={ classes.videoStats }>
                                     <div className={ classes.statBar }>
                                         <ThumbUp className={ classes.iconStyle }/>
                                         <Typography className={ classes.likeStyle }>
-                                             { likeCount } 
+                                             { convertNumbers(likeCount) }
                                         </Typography>
                                     </div>
                                     <div className={ classes.statBar }>
                                         <ThumbDown className={ classes.iconStyle }/>    
                                         <Typography className={ classes.likeStyle }>
-                                             { dislikeCount }
+                                             { convertNumbers(dislikeCount) }
                                         </Typography>
                                     </div>
                                 </CardContent>

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { fetchVideoComment } from "../../utils/ytUtil";
+import { convertNumbers } from "../../utils/numConverter";
+import { formatNumbers } from "../../utils/numConverter";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -114,7 +116,7 @@ class Comment extends Component {
                 <div className={ classes.root }>
                     <div>
                         <Typography className={ classes.commentCount }>
-                            { commentCount } Comments 
+                            { formatNumbers(commentCount) } Comments
                         </Typography>
                     </div>
                    <div>
@@ -124,7 +126,6 @@ class Comment extends Component {
                           const { publishedAt } = comment.snippet.topLevelComment.snippet;
                           const { likeCount } = comment.snippet.topLevelComment.snippet;
                           const { textDisplay } = comment.snippet.topLevelComment.snippet;
-                          console.log(comment)
 
                           return(
                               <Card key={ index } className={ classes.card }>
@@ -150,7 +151,7 @@ class Comment extends Component {
                                     <CardContent className={ classes.commentStat }>
                                         <ThumbUp className={ classes.likeStyle }></ThumbUp> 
                                         <Typography className={ classes.likeCount }>
-                                            { likeCount }
+                                            { convertNumbers(likeCount) }
                                         </Typography>
                                         <ThumbDown className={ classes.likeStyle }></ThumbDown>
                                     </CardContent>
