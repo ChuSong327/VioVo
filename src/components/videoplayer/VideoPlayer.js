@@ -37,10 +37,10 @@ const styles = theme => ({
         marginTop: theme.spacing.unit * 3,
         marginLeft: theme.spacing.unit * 3,
         fontWeight: 500,
-        fontSize: "1.3vw"
+        fontSize: "20px"
     },
     viewStyle: {
-        fontSize: "1.1vw",
+        fontSize: "16px",
         color: "grey",
     },
     videoStats: {
@@ -59,7 +59,7 @@ const styles = theme => ({
         alignItems: "center",
     },
     iconStyle:{
-        fontSize: "1.5vw",
+        fontSize: "17px",
         color:"#9E9E9E",
         display: "inline-block",
         marginRight: theme.spacing.unit * 1.2,
@@ -69,7 +69,7 @@ const styles = theme => ({
     },
     likeStyle: {
         color: "#9E9E9E",
-        fontSize: "1vw"
+        fontSize: "14px"
     }
 });
 

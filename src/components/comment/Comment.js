@@ -17,7 +17,7 @@ const styles = theme => ({
         flexDirection: "column",
     },
     commentCount: {
-        fontSize: "1.2vw",
+        fontSize: "18px",
         marginLeft: theme.spacing.unit * 2.2,
         marginTop: theme.spacing.unit * 2.5,
         marginBottom: theme.spacing.unit * 1.5
@@ -32,8 +32,8 @@ const styles = theme => ({
     },
     authorImage: {
         borderRadius: "50%",
-        height: "3vw",
-        width: "3vw",
+        height: "45px",
+        width: "45px",
         marginTop: theme.spacing.unit * 2,
         marginLeft: theme.spacing.unit * 2.2
     },
@@ -42,13 +42,13 @@ const styles = theme => ({
         marginRight: theme.spacing.unit * 1.5,
         display: "inline-blcok",
         float: "left",
-        fontSize: "0.9vw"
+        fontSize: "13px"
     },
     publishedAt: {
         color:"#9E9E9E",
         display: "inline-block",
         float: "left",
-        fontSize: "0.9vw"
+        fontSize: "13px"
     },
     commentBox: {
         paddingTop: "6px",
@@ -56,7 +56,7 @@ const styles = theme => ({
         height: "auto"
     },
     commentText: {
-        fontSize: "1vw",
+        fontSize: "15px",
         overflow:"hidden",
         textOverflow: "ellipsis",
         lineHeight: 1.5
@@ -68,7 +68,7 @@ const styles = theme => ({
         alignItems: "center",
     },
     likeStyle: {
-        fontSize:"1.1vw",
+        fontSize:"15px",
         color: "#9E9E9E",
         "&:hover": {
             color: "#757575"
@@ -76,7 +76,7 @@ const styles = theme => ({
         marginRight: theme.spacing.unit * 1
     },
     likeCount: {
-        fontSize: "0.9vw",
+        fontSize: "12px",
         color: "#9E9E9E",
         marginRight: theme.spacing.unit * 2,
     }
