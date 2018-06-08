@@ -48,3 +48,18 @@ export const getVideoInfo = videoId => {
                 return res.data;
             });
 };
+
+export const fetchVideoComment = videoId => {
+    const url = "https://www.googleapis.com/youtube/v3/commentThreads";
+    const params = {
+        key: YOUTUBE_API_KEY,
+        part: "snippet,replies",
+        videoId: videoId,
+        maxResults: 50
+    };
+
+    return axios.get(url, { params })
+            .then(res => {
+                return res.data;
+            });
+};
