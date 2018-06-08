@@ -12,30 +12,32 @@ import ThumbDown from "@material-ui/icons/ThumbDown";
 const styles = theme => ({
     root: {
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
     },
     commentCount: {
         fontSize: "1.2vw",
         marginLeft: theme.spacing.unit * 2.2,
-        marginTop: theme.spacing.unit * 2.5
+        marginTop: theme.spacing.unit * 2.5,
+        marginBottom: theme.spacing.unit * 1.5
     }, 
     card: {
-        height: theme.spacing.unit * 13,
+        height: "auto",
         boxShadow: "none",
         display: "flex",
         flexDirection:"row",
-        justifyContent: "flex-start"
+        justifyContent: "flex-start",
+        paddingBottom: 0
     },
     authorImage: {
         borderRadius: "50%",
-        height: theme.spacing.unit * 5.5,
-        width: theme.spacing.unit * 5.5,
+        height: "3vw",
+        width: "3vw",
         marginTop: theme.spacing.unit * 2,
         marginLeft: theme.spacing.unit * 2.2
     },
     authorName: {
         fontWeight: 500,
-        marginRight: theme.spacing.unit * 2,
+        marginRight: theme.spacing.unit * 1.5,
         display: "inline-blcok",
         float: "left",
         fontSize: "0.9vw"
@@ -47,21 +49,24 @@ const styles = theme => ({
         fontSize: "0.9vw"
     },
     commentBox: {
-        paddingTop: theme.spacing.unit * 1,
+        paddingTop: "6px",
+        paddingBottom: "6px",
+        height: "auto"
     },
     commentText: {
         fontSize: "1vw",
-
+        overflow:"hidden",
+        textOverflow: "ellipsis",
+        lineHeight: 1.5
     },
     commentStat: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
-        paddingTop: 0
     },
     likeStyle: {
-        fontSize:"1vw",
+        fontSize:"1.1vw",
         color: "#9E9E9E",
         "&:hover": {
             color: "#757575"
@@ -69,9 +74,9 @@ const styles = theme => ({
         marginRight: theme.spacing.unit * 1
     },
     likeCount: {
-        fontSize: "1vw",
+        fontSize: "0.9vw",
         color: "#9E9E9E",
-        marginRight: theme.spacing.unit * 1
+        marginRight: theme.spacing.unit * 2,
     }
 });
 
