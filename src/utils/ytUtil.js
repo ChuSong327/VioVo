@@ -55,6 +55,7 @@ export const fetchVideoComment = videoId => {
         key: YOUTUBE_API_KEY,
         part: "snippet,replies",
         videoId: videoId,
+        textFormat: "plainText",
         maxResults: 50
     };
 
