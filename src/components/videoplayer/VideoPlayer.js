@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import VideoList from "../videolist/VideoList";
+import Comment from "../comment/Comment";
 import { getVideoInfo } from "../../utils/ytUtil";
+import { fetchVideoComment } from "../../utils/ytUtil";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent";
@@ -71,7 +73,7 @@ const styles = theme => ({
 class VideoPlayer extends Component {
     constructor(props){
         super(props);
-        this.state ={
+        this.state = {
             video: ""
         }
     }
@@ -82,6 +84,9 @@ class VideoPlayer extends Component {
             this.setState({
                 video: res.items
             })
+        });
+        fetchVideoComment(videoId).then(res => {
+            console.log(res);
         })
     };
 
@@ -136,12 +141,16 @@ class VideoPlayer extends Component {
                                 </CardContent>
                             </div>
                             <hr color="#EEEEEE" style={{ marginLeft: 23, marginTop: -5, marginRight: 60, borderBottomWidth: 0.1 }}/>
+                            <div>
+                                <Comment/>
+                             </div>
                         </Grid>
                         <Grid item xs={4}>
                             <VideoList/>
                         </Grid>
                     </Grid>
                 </div>
+                
             )
         }
     }
