@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { getVideoInfo } from "../../utils/ytUtil";
 import { withStyles } from "@material-ui/core/styles";
+import { convertNumbers } from "../../utils/numConverter";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -61,34 +62,6 @@ const styles = theme => ({
         marginBottom: theme.spacing.unit * 0.3
     }
 });
-
-//Slow Down the webpage loading significantly
-const convertNumbers = number => {
-    let newNum;
-    if(number < 1000) {
-        return number;
-    } 
-    else if (number < 10000) {
-        newNum = number.toString().substr(0, 1) + "," + number.toString().substring(1);
-        return newNum;
-    }
-    else if (10000 <= number && number < 1000000) {
-        newNum = Math.round(number / 1000) + "K";
-        return newNum;
-    }
-    else if (number >= 1000000 && number < 10000000) {
-        newNum = (number / 1000000).toString().substr(0, 3) + "M";
-        return newNum;
-    }
-    else if (number >= 10000000 && number < 100000000) {
-        newNum = Math.floor(number / 1000000) + "M";
-        return newNum;
-    }
-    else if (number >= 100000000) {
-        newNum = Math.floor(number / 100000000) + "B";
-        return newNum;
-    }
-}
 
 class Gallery extends Component {
     constructor(props) {
