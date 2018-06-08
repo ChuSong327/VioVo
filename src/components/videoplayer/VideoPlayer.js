@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import VideoList from "../videolist/VideoList";
 import Comment from "../comment/Comment";
 import { getVideoInfo } from "../../utils/ytUtil";
-import { fetchVideoComment } from "../../utils/ytUtil";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent";
@@ -54,7 +53,7 @@ const styles = theme => ({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "flex-end"
+        alignItems: "flex-end",
     },
     iconStyle:{
         fontSize: "1.5vw",
@@ -66,7 +65,8 @@ const styles = theme => ({
         }
     },
     likeStyle: {
-        color: "#9E9E9E"
+        color: "#9E9E9E",
+        fontSize: "1.1vw"
     }
 });
 
@@ -74,20 +74,17 @@ class VideoPlayer extends Component {
     constructor(props){
         super(props);
         this.state = {
-            video: ""
+            video: "",
         }
-    }
+    };
 
-    componentWillMount(){
+    componentDidMount(){
         const videoId = this.props.videoId;
         getVideoInfo(videoId).then(res => {
             this.setState({
                 video: res.items
             })
         });
-        fetchVideoComment(videoId).then(res => {
-            console.log(res);
-        })
     };
 
     render(){
@@ -104,6 +101,7 @@ class VideoPlayer extends Component {
             const { viewCount } = this.state.video[0].statistics;
             const { likeCount } = this.state.video[0].statistics;
             const { dislikeCount } = this.state.video[0].statistics;
+            const { commentCount } = this.state.video[0].statistics;
 
             return(
                 <div className={ classes.root }>
@@ -142,7 +140,7 @@ class VideoPlayer extends Component {
                             </div>
                             <hr color="#EEEEEE" style={{ marginLeft: 23, marginTop: -5, marginRight: 60, borderBottomWidth: 0.1 }}/>
                             <div>
-                                <Comment/>
+                                <Comment videoId={ id } commentCount={ commentCount }/>
                              </div>
                         </Grid>
                         <Grid item xs={4}>
