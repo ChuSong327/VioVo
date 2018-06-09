@@ -68,7 +68,7 @@ const styles = theme => ({
         alignItems: "center",
     },
     likeStyle: {
-        fontSize:"15px",
+        fontSize:"16px",
         color: "#9E9E9E",
         "&:hover": {
             color: "#757575"
@@ -76,7 +76,7 @@ const styles = theme => ({
         marginRight: theme.spacing.unit * 1
     },
     likeCount: {
-        fontSize: "12px",
+        fontSize: "13px",
         color: "#9E9E9E",
         marginRight: theme.spacing.unit * 2,
     }
