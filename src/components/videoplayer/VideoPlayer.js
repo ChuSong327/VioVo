@@ -14,11 +14,6 @@ import ThumbUp from "@material-ui/icons/ThumbUp";
 import ThumbDown from "@material-ui/icons/ThumbDown";
 
 const styles = theme => ({
-    root: {
-        marginTop: theme.spacing.unit * 1,
-        marginLeft: theme.spacing.unit * 1,
-        marginRight: theme.spacing.unit * 1
-    },
     progress: {
         marginTop: theme.spacing.unit * 0.5
     },
@@ -105,9 +100,10 @@ class VideoPlayer extends Component {
             const { likeCount } = this.state.video[0].statistics;
             const { dislikeCount } = this.state.video[0].statistics;
             const { commentCount } = this.state.video[0].statistics;
+            const { categoryId } = this.state.video[0].snippet;
 
             return(
-                <div className={ classes.root }>
+                <div>
                     <iframe 
                         className={ classes.media }
                         src={ url } 
@@ -116,7 +112,7 @@ class VideoPlayer extends Component {
                         allowFullScreen>
                     </iframe>
                     <Grid container>
-                        <Grid item xs={8}>
+                        <Grid item xs={ 8 }>
                             <Typography className={ classes.videoTitle }>
                                 { title }
                              </Typography>
@@ -146,8 +142,8 @@ class VideoPlayer extends Component {
                                 <Comment videoId={ id } commentCount={ commentCount }/>
                              </div>
                         </Grid>
-                        <Grid item xs={4}>
-                            <VideoList/>
+                        <Grid item xs={ 4 }>
+                            <VideoList categoryId = { categoryId }/>
                         </Grid>
                     </Grid>
                 </div>
