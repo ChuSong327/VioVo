@@ -72,7 +72,7 @@ export const getVideoCategory = categoryId => {
         part: "snippet,statistics",
         chart: "mostPopular",
         videoCategoryId: categoryId,
-        maxResults: 20
+        maxResults: 50
     };
 
     return axios.get(url, { params }) 
