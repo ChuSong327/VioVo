@@ -64,3 +64,19 @@ export const fetchVideoComment = videoId => {
                 return res.data;
             });
 };
+
+export const getVideoCategory = categoryId => {
+    const url = "https://www.googleapis.com/youtube/v3/videos";
+    const params = {
+        key: YOUTUBE_API_KEY,
+        part: "snippet,statistics",
+        chart: "mostPopular",
+        videoCategoryId: categoryId,
+        maxResults: 20
+    };
+
+    return axios.get(url, { params }) 
+            .then(res => {
+                return res.data;
+            })
+}
