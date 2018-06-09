@@ -107,7 +107,9 @@ class Comment extends Component {
         if(comments.length === 0) {
             return(
                 <div>
-                    No Comment Yet
+                    <Typography>
+                        No Comment Available.
+                    </Typography>
                 </div>
             )
         } 

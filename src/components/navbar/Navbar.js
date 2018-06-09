@@ -89,7 +89,7 @@ class Navbar extends Component {
                 <AppBar position="static" color="primary">
                     <Toolbar>
                         <Typography variant="title" className={ classes.title }>
-                            <a href="#" style={{ textDecoration: "none", color:"inherit" }}>VioVo</a>
+                            <a href="/" style={{ textDecoration: "none", color:"inherit" }}>VioVo</a>
                         </Typography>
                         <form className={ classes.form }>
                             <TextField 
