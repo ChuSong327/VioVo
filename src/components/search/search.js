@@ -21,7 +21,11 @@ const styles = theme => ({
         display: "flex",
         flexDirection:"row",
         justifyContent:"flex-start",
-        alignItems: "flex-start"
+        alignItems: "flex-start",
+        "&:hover": {
+            cursor: "pointer",
+            boxShadow: "1px 2px 3px #ddd"
+        }
     },
     media: {
         height: "10vw",
