@@ -18,7 +18,11 @@ const styles = theme => ({
         display: "flex",
         flexDirection: "row",
         justifyContent: "flex-start",
-        height: "100px"
+        height: "100px",
+        "&:hover": {
+            cursor: "pointer",
+            boxShadow: "1px 2px 3px #ddd"
+        }
     },
     image: {
         height: "100px",

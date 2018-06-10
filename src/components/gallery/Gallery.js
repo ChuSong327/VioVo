@@ -20,7 +20,10 @@ const styles = theme => ({
         width: 260,
         height: 230,
         marginTop: theme.spacing.unit * 6,
-        marginRight: theme.spacing.unit * 2
+        marginRight: theme.spacing.unit * 2,
+        "&:hover": {
+            cursor: "pointer"
+        }
     },
     progress: {
         marginTop: theme.spacing.unit * 0.5
