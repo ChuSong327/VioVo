@@ -91,9 +91,9 @@ class Gallery extends Component {
                         return(
                             <Card 
                                 className={ classes.card } 
-                                key={ index } 
-                                onClick={ videoClick } 
-                                id={ id }>
+                                key={ index }
+                                id={ id } 
+                                onClick={ videoClick }>
                                 <CardMedia 
                                     className={ classes.media }
                                     image={ url } 
