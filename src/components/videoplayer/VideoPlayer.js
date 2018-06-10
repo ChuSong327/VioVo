@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import VideoList from "../videolist/VideoList";
 import Comment from "../comment/Comment";
-import { getVideoInfo } from "../../utils/ytUtil";
 import { convertNumbers } from "../../utils/numConverter";
 import { formatNumbers } from "../../utils/numConverter";
 import { withStyles } from "@material-ui/core/styles";
@@ -15,7 +14,7 @@ import ThumbDown from "@material-ui/icons/ThumbDown";
 
 const styles = theme => ({
     progress: {
-        marginTop: theme.spacing.unit * 0.5
+        marginTop: theme.spacing.unit * 0.8
     },
     media: {
         width: "100%",
@@ -76,32 +75,30 @@ class VideoPlayer extends Component {
         }
     };
 
-    componentDidMount(){
-        const videoId = this.props.videoId;
-        getVideoInfo(videoId).then(res => {
-            this.setState({
-                video: res.items
-            })
-        });
+    componentWillMount(){
+        this.setState({
+            video: this.props.video
+        })
     };
 
     render(){
         const { classes } = this.props;
+        const { videoClick } = this.props;
         if(!this.state.video) {
             return(
                 <LinearProgress className={ classes.progress } color="secondary"/>
             )
         } 
         else if(this.state.video) {
-            const { id } = this.state.video[0];
-            const url = "https://www.youtube.com/embed/" + id;
-            const { title } = this.state.video[0].snippet;
-            const { viewCount } = this.state.video[0].statistics;
-            const { likeCount } = this.state.video[0].statistics;
-            const { dislikeCount } = this.state.video[0].statistics;
-            const { commentCount } = this.state.video[0].statistics;
-            const { categoryId } = this.state.video[0].snippet;
-
+            const { id } = this.props.video[0];
+            const url = "https://www.youtube.com/embed/" + this.props.videoId;
+            const { title } = this.props.video[0].snippet;
+            const { viewCount } = this.props.video[0].statistics;
+            const { likeCount } = this.props.video[0].statistics;
+            const { dislikeCount } = this.props.video[0].statistics;
+            const { commentCount } = this.props.video[0].statistics;
+            const { comments } = this.props;
+            const { videoList } = this.props;
             return(
                 <div>
                     <iframe 
@@ -139,11 +136,11 @@ class VideoPlayer extends Component {
                             </div>
                             <hr color="#EEEEEE" style={{ marginLeft: 23, marginTop: -5, marginRight: 60, borderBottomWidth: 0.1 }}/>
                             <div>
-                                <Comment videoId={ id } commentCount={ commentCount }/>
+                                <Comment videoId={ id } comments={ comments } commentCount={ commentCount }/>
                              </div>
                         </Grid>
                         <Grid item xs={ 4 }>
-                            <VideoList categoryId = { categoryId }/>
+                            <VideoList videoList={ videoList } videoClick={ videoClick }/>
                         </Grid>
                     </Grid>
                 </div>

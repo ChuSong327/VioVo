@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { YOUTUBE_API_KEY } from "./config/secret";
-import { fetchYoutube, getMostPopularVideos } from "./utils/ytUtil";
+import { fetchYoutube, getMostPopularVideos, getVideoInfo, fetchVideoComment, getRelatedVideo} from "./utils/ytUtil";
 import Navbar from "./components/navbar/Navbar";
 import Gallery from "./components/gallery/Gallery";
 import Search from "./components/search/search";
@@ -33,14 +33,17 @@ class App extends Component {
             searchClick: null,
             searchInput:"",
             videoClick: null,
-            videoId: ""
-        } 
+            videoId: "",
+            video: "",
+            comments: "",
+            videoList: ""
+        }; 
         this.handleSearchClick = this.handleSearchClick.bind(this);
         this.handleSearchInput = this.handleSearchInput.bind(this);
         this.handleVideoClick = this.handleVideoClick.bind(this);
     };
 
-    componentWillMount(){
+    componentDidMount(){
         getMostPopularVideos().then(res => {
             this.setState({
                 videos: res.items
@@ -66,12 +69,25 @@ class App extends Component {
     };
 
     handleVideoClick(event){
-        const videoId = event.currentTarget.id
-        this.setState({
-            videoClick: true,
-            searchClick: false,
-            videoId: videoId
-        })
+        const videoId = event.currentTarget.id;
+        getVideoInfo(videoId).then(res => {
+            this.setState({
+                video: res.items,
+                videoClick: true,
+                searchClick: false,
+                videoId: videoId
+            })
+        });
+        fetchVideoComment(videoId).then(res => {
+            this.setState({
+                comments: res.items
+            })
+        });
+        getRelatedVideo(videoId).then(res => {
+            this.setState({
+                videoList: res.items
+            })  
+        });
     };
 
     render() {
@@ -81,12 +97,20 @@ class App extends Component {
         const { searchInput } = this.state;
         const { videoClick } = this.state;
         const { videoId } = this.state;
+        const { video } = this.state;
+        const { comments } = this.state;
+        const { videoList } = this.state;
         return(
             <Fragment >
                 <MuiThemeProvider theme={ theme }>
                     <Navbar searchClick={ this.handleSearchClick } searchInput={ this.handleSearchInput }/>
                     { searchClick ? <Search searchResult={ searchResult } videoClick={ this.handleVideoClick }/> 
-                                  : (videoClick ? <VideoPlayer videoId={ videoId }/> 
+                                  : (videoClick ? <VideoPlayer 
+                                                    videoId={ videoId } 
+                                                    video={ video } 
+                                                    comments={ comments }
+                                                    videoList={ videoList }
+                                                    videoClick={ this.handleVideoClick }/> 
                                                  : <Gallery videos={ videos } videoClick = { this.handleVideoClick } />)}
                 </MuiThemeProvider>
             </Fragment>

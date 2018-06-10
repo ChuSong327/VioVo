@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { fetchVideoComment } from "../../utils/ytUtil";
 import { convertNumbers } from "../../utils/numConverter";
 import { formatNumbers } from "../../utils/numConverter";
 import { withStyles } from "@material-ui/core/styles";
@@ -91,20 +90,16 @@ class Comment extends Component {
     };
 
     componentWillMount(){
-        const videoId = this.props.videoId;
-        fetchVideoComment(videoId).then(res => {
-            this.setState({
-                comments: res.items
-            })
-        })
+        this.setState({
+            comments: this.props.comments
+        });
     };
 
     render(){
         const { classes } = this.props;
-        const { comments } = this.state;
+        const { comments } = this.props;
         const { commentCount } = this.props;
-       
-        if(comments.length === 0) {
+        if(!comments) {
             return(
                 <div>
                     <Typography>
