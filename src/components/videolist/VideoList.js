@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { getVideoCategory } from "../../utils/ytUtil";
 import { convertNumbers } from "../../utils/numConverter";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import Moment from "react-moment";
 
 const styles = theme => ({
     root: {
@@ -61,22 +61,19 @@ class VideoList extends Component {
     constructor(props){
         super(props);
         this.state = {
-            videos: []
+            videoList: ""
         }
     };
     componentWillMount(){
-        const categoryId = this.props.categoryId;
-        getVideoCategory(categoryId).then(res => {
-            this.setState({
-                videos: res.items
-            }) 
-        })
+      this.setState({
+        videoList: this.props.videoList
+      });
     };
     render(){
-        const { videos } = this.state;
+        const { videoList } = this.props;
         const { classes } = this.props;
-
-        if(videos.length === 0 ) {
+        const { videoClick } = this.props;
+        if(!videoList) {
             return(
                    <div>
                        <Typography>
@@ -88,14 +85,18 @@ class VideoList extends Component {
         else {
             return(
                 <div className={ classes.root }>
-                    {videos.map((video, index) => {
+                    {videoList.map((video, index) => {
                         const { title } = video.snippet;
-                        const { viewCount } = video.statistics;
+                        const { publishedAt } = video.snippet;
                         const { channelTitle } = video.snippet; 
                         const { url } = video.snippet.thumbnails.medium;
-
+                        const { videoId } = video.id;
                         return(
-                            <Card key={ index } className={ classes.card }>
+                            <Card 
+                                key={ index } 
+                                className={ classes.card } 
+                                id={ videoId }
+                                onClick={ videoClick }>
                                 <CardMedia
                                     className={ classes.image }
                                     image={ url }/>
@@ -112,11 +113,10 @@ class VideoList extends Component {
                                     </CardContent>
                                     <CardContent className={ classes.main }>
                                         <Typography className={ classes.viewCount }>
-                                            { convertNumbers(viewCount) } views
+                                            <Moment fromNow>{ publishedAt }</Moment>
                                         </Typography>
                                     </CardContent>
                                 </div>
-                                
                             </Card>
                         )
                     })}
