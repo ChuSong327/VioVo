@@ -25,7 +25,8 @@ const styles = theme => ({
         "&:hover": {
             cursor: "pointer",
             boxShadow: "1px 2px 3px #ddd"
-        }
+        },
+        boxShadow: "none"
     },
     media: {
         height: "10vw",
