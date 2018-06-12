@@ -28,35 +28,37 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            videos: "",
+            comments: "",
+            commentNextPage: "",
+            galleryNextPage: "",
             searhResult: "",
             searchClick: null,
             searchInput:"",
             videoClick: null,
             videoId: "",
             video: "",
-            comments: "",
-            videoList: ""
+            videos: "",
+            videoList: "",
         }; 
         this.handleSearchClick = this.handleSearchClick.bind(this);
         this.handleSearchInput = this.handleSearchInput.bind(this);
         this.handleVideoClick = this.handleVideoClick.bind(this);
+        this.handleGalleryScroll = this.handleGalleryScroll.bind(this);
+        this.handlePlayerScroll = this.handlePlayerScroll.bind(this);
     };
-
-    componentDidMount(){
+    componentWillMount(){
         getMostPopularVideos().then(res => {
             this.setState({
-                videos: res.items
+                videos: res.items,
+                galleryNextPage: res.nextPageToken
             })
-        })
+        });
     };  
-
     handleSearchInput(event){
         this.setState({
             searchInput: event.target.value
         })
     };
-
     handleSearchClick(event){
         const keyword = this.state.searchInput;
         fetchYoutube(keyword).then(res => {
@@ -65,9 +67,8 @@ class App extends Component {
                 searchClick: true,
                 videoClick: false
             })
-        })
+        });
     };
-
     handleVideoClick(event){
         const videoId = event.currentTarget.id;
         getVideoInfo(videoId).then(res => {
@@ -89,16 +90,48 @@ class App extends Component {
             })  
         });
     };
-
+    handleGalleryScroll(event){
+        event.preventDefault();
+        const pageToken = this.state.galleryNextPage;
+        const currentVideos = this.state.videos;
+        const galleryClientHeight = window.document.getElementById("Gallery").clientHeight;
+        const galleryScrollTop = window.document.getElementById("Gallery").scrollTop;
+        const galleryScrollHeight = window.document.getElementById("Gallery").scrollHeight;
+        if (galleryClientHeight + galleryScrollTop === galleryScrollHeight) {
+            getMostPopularVideos(pageToken).then(res => {
+                this.setState({
+                    videos: currentVideos.concat(res.items),
+                    galleryNextPage: res.nextPageToken
+                })
+            });
+        }
+    };
+    handlePlayerScroll(event){
+        event.preventDefault();
+        const pageToken = this.state.commentNextPage;
+        const currentComments = this.state.comments;
+        const { videoId } = this.state;
+        const playerClientHeight = window.document.getElementById("VideoPlayer").clientHeight;
+        const playerScrollHeight = window.document.getElementById("VideoPlayer").scrollHeight;
+        const playerScrollTop = window.document.getElementById("VideoPlayer").scrollTop;
+        if (playerClientHeight + playerScrollTop === playerScrollHeight) {
+            fetchVideoComment(videoId, pageToken).then(res => {
+                this.setState({
+                    comments: currentComments.concat(res.items),
+                    commentNextPage: res.nextPageToken
+                })
+            });
+        }
+    };
     render() {
-        const { videos } = this.state;
+        const { comments } = this.state;
         const { searchResult } = this.state;
         const { searchClick } = this.state;
         const { searchInput } = this.state;
+        const { videos } = this.state;
         const { videoClick } = this.state;
         const { videoId } = this.state;
         const { video } = this.state;
-        const { comments } = this.state;
         const { videoList } = this.state;
         return(
             <Fragment >
@@ -110,8 +143,12 @@ class App extends Component {
                                                     video={ video } 
                                                     comments={ comments }
                                                     videoList={ videoList }
-                                                    videoClick={ this.handleVideoClick }/> 
-                                                 : <Gallery videos={ videos } videoClick = { this.handleVideoClick } />)}
+                                                    videoClick={ this.handleVideoClick }
+                                                    scroll={ this.handlePlayerScroll }/> 
+                                                 : <Gallery 
+                                                    videos={ videos } 
+                                                    videoClick = { this.handleVideoClick } 
+                                                    scroll={ this.handleGalleryScroll }/>)}
                 </MuiThemeProvider>
             </Fragment>
         )

@@ -103,7 +103,7 @@ class Comment extends Component {
             return(
                 <div>
                     <Typography>
-                        No Comment Available.
+                        Comments Are Disabled.
                     </Typography>
                 </div>
             )

@@ -10,14 +10,13 @@ export const fetchYoutube = keywords => {
         part: "snippet",
         maxResults: 20
     };
-    
     return axios.get(url, { params })
             .then(res => { 
                 return res.data;
             });
 };
 
-export const getMostPopularVideos = videoId => {
+export const getMostPopularVideos = (pageToken) => {
     const url = "https://www.googleapis.com/youtube/v3/videos";
     const params = {
         key: YOUTUBE_API_KEY,
@@ -26,8 +25,8 @@ export const getMostPopularVideos = videoId => {
         part: "snippet,contentDetails,statistics",
         maxResults: 20,
         videoCategoryId: "",
+        pageToken: pageToken
     };
-
     return axios.get(url, { params })
             .then(res => {
                 return res.data;
@@ -42,23 +41,22 @@ export const getVideoInfo = videoId => {
         videoCategoryId: "",
         id: videoId
     };
-
     return axios.get(url, { params })
             .then(res => {
                 return res.data;
             });
 };
 
-export const fetchVideoComment = videoId => {
+export const fetchVideoComment = (videoId,pageToken) => {
     const url = "https://www.googleapis.com/youtube/v3/commentThreads";
     const params = {
         key: YOUTUBE_API_KEY,
         part: "snippet,replies",
         videoId: videoId,
         textFormat: "plainText",
-        maxResults: 50
+        maxResults: 50,
+        pageToken: pageToken
     };
-
     return axios.get(url, { params })
             .then(res => {
                 return res.data;
@@ -74,7 +72,6 @@ export const getRelatedVideo = videoId => {
         type: "video",
         maxResults: 20
     };
-
     return axios.get(url, { params })
             .then(res => {
                 return res.data;

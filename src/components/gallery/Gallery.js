@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { getVideoInfo } from "../../utils/ytUtil";
 import { withStyles } from "@material-ui/core/styles";
 import { convertNumbers } from "../../utils/numConverter";
 import Typography from "@material-ui/core/Typography";
@@ -15,6 +14,7 @@ const styles = theme => ({
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "center",
+        overflow: "scroll"
     },
     card : {
         width: 260,
@@ -71,19 +71,19 @@ class Gallery extends Component {
         super(props);
         this.state = {}
     };
-
     render() {
         const { classes } = this.props;
         const { videos } = this.props;
         const { videoClick } = this.props;
-
-        if(!videos) {
+        const { scroll } = this.props;
+        const { ref } = this.props;
+        if (!videos) {
             return (
                 <LinearProgress className={ classes.progress } color="secondary"/>
             )
-        } else if(videos) {
+        } else if (videos) {
             return (
-                <div className={ classes.root }>
+                <div className={ classes.root } id="Gallery" onScroll={ scroll } style={{height: "720px"}}>
                     {videos.map((video, index) => {
                         const { url } = video.snippet.thumbnails.medium;
                         const { title } = video.snippet;
@@ -118,6 +118,7 @@ class Gallery extends Component {
                         )      
                     })}
                 </div>
+                
             )
         }
     };

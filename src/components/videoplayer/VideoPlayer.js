@@ -13,6 +13,9 @@ import ThumbUp from "@material-ui/icons/ThumbUp";
 import ThumbDown from "@material-ui/icons/ThumbDown";
 
 const styles = theme => ({
+    root: {
+        overflow: "scroll",
+    },
     progress: {
         marginTop: theme.spacing.unit * 0.8
     },
@@ -84,6 +87,7 @@ class VideoPlayer extends Component {
     render(){
         const { classes } = this.props;
         const { videoClick } = this.props;
+        const { scroll } = this.props;
         if(!this.state.video) {
             return(
                 <LinearProgress className={ classes.progress } color="secondary"/>
@@ -100,16 +104,18 @@ class VideoPlayer extends Component {
             const { comments } = this.props;
             const { videoList } = this.props;
             return(
-                <div>
-                    <iframe 
-                        className={ classes.media }
-                        src={ url } 
-                        allow="autoplay; encrypted-media" 
-                        frameBorder="0"
-                        allowFullScreen>
-                    </iframe>
-                    <Grid container>
-                        <Grid item xs={ 8 }>
+                <div className={ classes.root } id="VideoPlayer" onScroll={ scroll } style={{ height: "720px"}}>
+                    <div>
+                        <iframe 
+                            className={ classes.media }
+                            src={ url } 
+                            allow="autoplay; encrypted-media" 
+                            frameBorder="0"
+                            allowFullScreen>
+                        </iframe>
+                    </div>
+                    <Grid container style={{ flexFlow: "wrap-reverse"}}>
+                        <Grid item xs={ 12 } sm={ 8 }>
                             <Typography className={ classes.videoTitle }>
                                 { title }
                              </Typography>
@@ -139,12 +145,11 @@ class VideoPlayer extends Component {
                                 <Comment videoId={ id } comments={ comments } commentCount={ commentCount }/>
                              </div>
                         </Grid>
-                        <Grid item xs={ 4 }>
+                        <Grid item xs={ 12 } sm={ 4 }>
                             <VideoList videoList={ videoList } videoClick={ videoClick }/>
                         </Grid>
                     </Grid>
                 </div>
-                
             )
         }
     }
