@@ -8,7 +8,6 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 
 module.exports = {
     entry: path.join(__dirname, "./src/index.js"),
-
     module: {
         rules: [
             {
@@ -21,7 +20,4 @@ module.exports = {
         ]
     },
     plugins: [htmlWebpackPlugin],
-    resolve: {
-        extensions: [".js", ".jsx"]
-    },
 }
