@@ -21,6 +21,9 @@ const theme = createMuiTheme({
       dark: "#c8b7b5",
       contrastText: "#fafafa",
     }
+  },
+  typography: {
+      "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
   }
 });
 
