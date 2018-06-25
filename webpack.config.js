@@ -6,16 +6,13 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 });
 
 module.exports = {
-    output: {
-        publicPath: '/', // if you don't put the "/" here, you get this error:
-      },                 // "bundle.js:1 Uncaught SyntaxError: Unexpected token <"
     module: {
         rules: [
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: "babel-loader"
+                    loader: ["babel-loader", "react-hot"]
                 }
             }
         ]
