@@ -1,21 +1,27 @@
-const path = require('path');
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const htmlWebpackPlugin = new HtmlWebpackPlugin({
-    template: path.join(__dirname, "./src/index.html"),
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+const htmlPlugin = new HtmlWebPackPlugin({
+    template: "./src/index.html",
     filename: "./index.html"
 });
 
 module.exports = {
-    module: {
+    module:{
         rules: [
             {
-                test: /\.(js|jsx)$/,
+                test: /\.js$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: ["babel-loader", "react-hot"]
+                use:{
+                    loader: "babel-loader"
                 }
+            },
+            {
+                test: /\.html$/,
+                use: {
+                    loader: "html-loader"
+                }
+                
             }
-        ]
+        ],
     },
-    plugins: [htmlWebpackPlugin],
-}
+    plugins: [htmlPlugin]
+};
